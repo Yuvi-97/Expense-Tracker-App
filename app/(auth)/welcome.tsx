@@ -5,16 +5,18 @@ import { colors, spacingY,spacingX } from '@/constants/theme'
 import Typo from '@/components/Typo'
 import { verticalScale } from '@/utils/styling'
 import Button from '@/components/Button'
+import Animated, { FadeIn } from 'react-native-reanimated'
 
 export default function Welcome() {
   return (
     <ScreenWrapper>
-        <View style={styles.container}>
+        <Animated.View entering={FadeIn} style={styles.container}>
             <View>
                 <TouchableOpacity style={styles.loginButton}>
-                    <Typo fontWeight={"500"}>Sign in</Typo>
+                    <Typo fontWeight={"400"}>Sign in</Typo>
                 </TouchableOpacity>
-                <Image 
+                <Animated.Image 
+                    entering={FadeIn.duration(2000)}   
                     source={(require("@/assets/images/welcome.png"))} 
                     style={styles.WelcomeImage} 
                     resizeMode='contain'
@@ -41,11 +43,11 @@ export default function Welcome() {
 
                 <View style={styles.buttoncontainer}>
                     <Button>
-                        <Typo>Get Started</Typo>
+                        <Typo color={colors.black} fontWeight={"600"}>Get Started</Typo>
                     </Button>
                 </View>
             </View>
-        </View>
+        </Animated.View>
     </ScreenWrapper>
   )
 }
