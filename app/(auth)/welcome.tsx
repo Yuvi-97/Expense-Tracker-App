@@ -1,11 +1,11 @@
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import ScreenWrapper from '@/components/ScreenWrapper'
 import { colors, spacingY,spacingX } from '@/constants/theme'
 import Typo from '@/components/Typo'
 import { verticalScale } from '@/utils/styling'
 import Button from '@/components/Button'
-import Animated, {  FadeInDown } from 'react-native-reanimated'
+import Animated, {  FadeIn, FadeInDown } from 'react-native-reanimated'
 import { useRouter } from 'expo-router'
 
 export default function Welcome() {
