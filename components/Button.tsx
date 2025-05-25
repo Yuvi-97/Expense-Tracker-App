@@ -1,4 +1,4 @@
-import { StyleSheet, Text, Touchable, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { CustomButtonProps } from '@/types'
 import { colors, radius } from '@/constants/theme'
@@ -27,6 +27,7 @@ const Button =({
 
 }
 export default Button;
+
 const styles = StyleSheet.create({
     button:{
         backgroundColor:colors.primary,

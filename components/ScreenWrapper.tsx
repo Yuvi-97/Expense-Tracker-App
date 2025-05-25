@@ -1,4 +1,4 @@
-import { Dimensions, Platform, StatusBar, StyleSheet, Text, View } from 'react-native'
+import { Dimensions, Platform, StatusBar, StyleSheet,View } from 'react-native'
 import React from 'react'
 import { ScreenWrapperProps } from '@/types'
 import { colors } from '@/constants/theme';

@@ -103,7 +103,7 @@ export type TransactionItemProps = {
   handleClick: Function;
 };
 
-export interface InputProps extends TextInputProps {
+export interface  InputProps extends TextInputProps {
   icon?: React.ReactNode;
   containerStyle?: ViewStyle;
   inputStyle?: TextStyle;

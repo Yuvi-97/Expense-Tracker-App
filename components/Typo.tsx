@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View,TextStyle } from 'react-native';
+import { StyleSheet, Text, TextStyle } from 'react-native';
 import React from 'react';
 import { colors } from '@/constants/theme';
 import { TypoProps } from '@/types';
@@ -20,8 +20,7 @@ const Typo=({
     return (
         <Text style={[textStyle,style]} {...textProps}>
             {children}
-        </Text>
-      
+        </Text> 
     )
 
 }
