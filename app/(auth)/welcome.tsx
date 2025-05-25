@@ -12,12 +12,13 @@ export default function Welcome() {
     const router=useRouter();
   return (
     <ScreenWrapper>
-        <View style={styles.container}>
+        <Animated.View entering={FadeIn} style={styles.container}>
             <View>
                 <TouchableOpacity onPress={()=>router.push('/(auth)/login')} style={styles.loginButton}>
                     <Typo fontWeight={"400"}>Sign in</Typo>
                 </TouchableOpacity>
-                <Image 
+                <Animated.Image 
+                    entering={FadeIn.duration(2000)}   
                     source={(require("@/assets/images/welcome.png"))} 
                     style={styles.WelcomeImage} 
                     resizeMode='contain'
@@ -50,7 +51,7 @@ export default function Welcome() {
                     </Button>
                 </Animated.View>
             </View>
-        </View>
+        </Animated.View>
     </ScreenWrapper>
   )
 }
