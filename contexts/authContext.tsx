@@ -1,25 +1,48 @@
 import { auth, firestore } from "@/config/firebase";
 import { AuthContextType, UserType } from "@/types";
+import { useRouter } from "expo-router";
 import {
   createUserWithEmailAndPassword,
+  onAuthStateChanged,
   signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 
 const AuthContext = createContext<AuthContextType | null>(null);
-
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [user, setUser] = useState<UserType>(null);
-
+  const router = useRouter();
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, (firebaseUser) => {
+      console.log("firebaseUser: ", firebaseUser);
+      if (firebaseUser) {
+        setUser({
+          uid: firebaseUser.uid,
+          email: firebaseUser.email,
+          name: firebaseUser.displayName,
+        });
+        router.replace("/(tabs)");
+      } else {
+        //No User
+        setUser(null);
+        router.replace("/(auth)/welcome");
+      }
+    });
+    return () => unsub();
+  }, []);
   const login = async (email: string, password: string) => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       return { success: true };
     } catch (error: any) {
       let msg = error.message;
+      if (msg.includes("(auth/invalid-email)")) msg = "Invalid Email";
+      if (msg.includes("(auth/invalid-credential)"))
+        msg = "Invalid credentials";
       return { success: false, msg };
     }
   };
@@ -31,14 +54,32 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         email,
         password
       );
+
+      if (response.user) {
+        await updateProfile(response.user, {
+          displayName: name,
+        });
+        console.log("Profile updated successfully:", response.user.displayName);
+
+        setUser({
+          uid: response.user.uid,
+          email: response.user.email,
+          name: name,
+        });
+      }
       await setDoc(doc(firestore, "users", response?.user?.uid), {
         name,
         email,
         uid: response?.user?.uid,
       });
+
       return { success: true };
     } catch (error: any) {
       let msg = error.message;
+      if (msg.includes("(auth/weak-password)"))
+        msg = "Password should be at least 6 characters";
+      if (msg.includes("(auth/email-already-in-use"))
+        msg = "Email Already in Use";
       return { success: false, msg };
     }
   };

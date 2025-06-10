@@ -1,6 +1,7 @@
 import {
   Dimensions,
   Platform,
+  SafeAreaView,
   StatusBar,
   StyleSheet,
   View,
